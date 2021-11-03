@@ -11,27 +11,29 @@ $str = "LINE API";
 $jsonsString = file_get_contents('php://input');    // apiから送られてくるwebhookを受け取る
 error_log("post:" . $jsonsString . "\n", 3, 'errors.log');           // とりあえずログにいれる
 
-$jsonObj = json_decode($jsonString);                // jsonに変換
-$messageData = $jsonObj->{"events"}[0]->{"message"};    // メッセージ関係のデータ
-$replyToken = $jsonObj->{"events"}[0]->{"replyToken"};  // リプライトークン：返事に必要なトークン
+$jsonObj = json_decode($jsonString, true);                // 連想配列に変換
 
-error_log("message-data:" . $messageData . "\n", 3, 'errors.log');
-error_log("reply-token:" . $replyToken . "\n", 3, 'errors.log');
+// $messageData = $jsonObj->{"events"}[0]->{"message"};    // メッセージ関係のデータ
+// $replyToken = $jsonObj->{"events"}[0]->{"replyToken"};  // リプライトークン：返事に必要なトークン
 
-// ひとまず返事をしてみる
-$replyData = ['type' => 'text', 'text' => "こんにちは！"];
-$response  = ['replyToken' => $replyToken, 'messages' => [$replyData]];
-// ひとまずログに残す
-error_log("res:" . json_encode($response) . "\n", 3, 'errors.log');
+// error_log("message-data:" . $messageData . "\n", 3, 'errors.log');
+// error_log("reply-token:" . $replyToken . "\n", 3, 'errors.log');
 
-$requestPost = curl_init($REQUESTPOST);
-curl_setopt($requestPost, CURLOPT_POST, true);
-curl_setopt($requestPost, CURLOPT_CUSTOMREQUEST, 'POST');
-curl_setopt($requestPost, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($requestPost, CURLOPT_POSTFIELDS, json_encode($response));
-curl_setopt($requestPost, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json; charser=UTF-8', 'Authorization: Bearer ' . $ACCESS_TOKEN ));
-$result = curl_exec($requestPost);
-error_log("result:" . $result . "\n", 3, 'errors.log');
-curl_close($requestPost);
+// // ひとまず返事をしてみる
+// $replyData = ['type' => 'text', 'text' => "こんにちは！"];
+// $response  = ['replyToken' => $replyToken, 'messages' => [$replyData]];
+// // ひとまずログに残す
+// error_log("res:" . json_encode($response) . "\n", 3, 'errors.log');
+
+// $requestPost = curl_init($REQUESTPOST);
+// curl_setopt($requestPost, CURLOPT_POST, true);
+// curl_setopt($requestPost, CURLOPT_CUSTOMREQUEST, 'POST');
+// curl_setopt($requestPost, CURLOPT_RETURNTRANSFER, true);
+// curl_setopt($requestPost, CURLOPT_POSTFIELDS, json_encode($response));
+// curl_setopt($requestPost, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json; charser=UTF-8', 'Authorization: Bearer ' . $ACCESS_TOKEN ));
+// $result = curl_exec($requestPost);
+// error_log("result:" . $result . "\n", 3, 'errors.log');
+// curl_close($requestPost);
 ?>
 <h1><?php echo($str) ?></h1>
+<p><?php print_r($jsonObj) ?></p>
