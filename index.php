@@ -5,13 +5,11 @@ $CHANNELID      = 1656594037;
 $CHANNELSECRET  = 'dbebda3ae55c7b16741bae975d9e7493';
 $WEBHOOKURL     = 'https://line-api-smp.exactly-good.work/index.php';
 
+$jsonsString = file_get_contents('php://input');    // apiから送られてくるwebhookを受け取る
+error_log($jsonsString, 3, 'errors.log');           // とりあえずログにいれる
+$jsonObj = json_decode($jsonString);                // jsonに変換
 
-$jsonsString = file_get_contents('php://input');
-error_log($jsonsString, 3, 'errors.log');
-
-$jsonObj = json_decode($jsonString);
-// var_dump($jsonObj);
-$str = "hello";
+$str = "LINE API";
 ?>
 <h1><?php echo($str) ?></h1>
-<p><?php echo($jsonsString) ?></p>
+<p><?php echo($jsonObj) ?></p>
