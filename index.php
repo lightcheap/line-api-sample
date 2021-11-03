@@ -15,10 +15,12 @@ $jsonObj = json_decode($jsonString);                // jsonに変換
 $messageData = $jsonObj->{"events"}[0]->{"message"};    // メッセージ関係のデータ
 $replyToken = $jsonObj->{"events"}[0]->{"replyToken"};  // リプライトークン：返事に必要なトークン
 
-// ひとまず返事をしてみる
-$replyData = ['type' => 'text', 'text' => 'こんにちは！'];
+error_log("message-data:" . $messageData . "\n", 3, 'errors.log');
+error_log("reply-token:" . $replyToken . "\n", 3, 'errors.log');
 
-$response = ['replyToken' => $replyToken, 'messages' => [$replyData]];
+// ひとまず返事をしてみる
+$replyData = ['type' => 'text', 'text' => "こんにちは！"];
+$response  = ['replyToken' => $replyToken, 'messages' => [$replyData]];
 // ひとまずログに残す
 error_log("res:" . json_encode($response) . "\n", 3, 'errors.log');
 
