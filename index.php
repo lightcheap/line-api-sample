@@ -7,6 +7,8 @@ $WEBHOOKURL     = 'https://line-api-smp.exactly-good.work/index.php';
 
 
 $jsonsString = file_get_contents('php://input');
+error_log($jsonsString, 3, 'errors.log');
+
 $jsonObj = json_decode($jsonString);
 // var_dump($jsonObj);
 $str = "hello";
